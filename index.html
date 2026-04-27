@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>居家健康厨房 · 每日养生饮食管家</title>
+<style>
+:root {
+  --green-dark: #3E5A30;
+  --green-mid: #5A7A42;
+  --green-light: #93C572;
+  --green-pale: #E8F5D8;
+  --bg: #F8F7F2;
+  --card: #FFFFFF;
+  --border: #E0DDD4;
+  --text: #2D3B2F;
+  --text2: #5A6B5C;
+  --text3: #8A9B8C;
+  --red: #C0392B;
+  --orange: #E67E22;
+  --yellow: #F1C40F;
+  --blue: #2980B9;
+  --radius: 14px;
+  --shadow: 0 2px 16px rgba(62,90,48,0.10);
+  --shadow-hover: 0 6px 28px rgba(62,90,48,0.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'PingFang SC','Microsoft YaHei',sans-serif;min-height:100vh}
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:var(--green-dark);box-shadow:0 2px 12px rgba(0,0,0,0.2)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:58px}
+.nav-brand{color:#fff;font-size:1.18rem;font-weight:700;display:flex;align-items:center;gap:8px}
+.nav-brand span{font-size:1.4rem}
+.nav-links{display:flex;gap:4px}
+.nav-links a{color:rgba(255,255,255,0.85);text-decoration:none;padding:6px 14px;border-radius:20px;font-size:0.88rem;transition:all .2s}
+.nav-links a:hover{background:rgba(255,255,255,0.18);color:#fff}
+/* HERO */
+.hero{background:linear-gradient(135deg,#3E5A30 0%,#5A7A42 50%,#7FA05A 100%);padding:52px 24px 44px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-content{position:relative;max-width:700px;margin:0 auto}
+.hero h1{color:#fff;font-size:2rem;font-weight:800;margin-bottom:10px;letter-spacing:1px}
+.hero p{color:rgba(255,255,255,0.85);font-size:1rem;line-height:1.7;margin-bottom:20px}
+.hero-stats{display:flex;justify-content:center;gap:32px;flex-wrap:wrap}
+.hero-stat{color:#fff;text-align:center}
+.hero-stat .num{font-size:1.6rem;font-weight:800;color:var(--green-light)}
+.hero-stat .lab{font-size:0.78rem;opacity:.8}
+/* INFO BAR */
+.infobar{background:var(--green-mid);padding:8px 24px;display:flex;justify-content:center;gap:32px;flex-wrap:wrap}
+.infobar span{color:rgba(255,255,255,0.9);font-size:0.82rem;display:flex;align-items:center;gap:5px}
+/* MAIN */
+.main{max-width:1200px;margin:32px auto;padding:0 20px;display:flex;flex-direction:column;gap:28px}
+/* SECTION CARD */
+.section-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.section-header{background:linear-gradient(90deg,var(--green-dark),var(--green-mid));padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.section-header h2{color:#fff;font-size:1.05rem;font-weight:700;display:flex;align-items:center;gap:8px}
+.section-header h2 span{font-size:1.2rem}
+.section-body{padding:22px 24px}
+/* BTN */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border:none;border-radius:8px;font-size:0.88rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn-primary{background:var(--green-dark);color:#fff}
+.btn-primary:hover{background:var(--green-mid);transform:translateY(-1px)}
+.btn-success{background:var(--green-light);color:var(--green-dark)}
+.btn-success:hover{background:#7db55f;transform:translateY(-1px)}
+.btn-danger{background:#fee;color:var(--red);border:1px solid #fcc}
+.btn-danger:hover{background:#fdd}
+.btn-outline{background:transparent;color:var(--green-dark);border:1.5px solid var(--green-dark)}
+.btn-outline:hover{background:var(--green-pale)}
+.btn-sm{padding:5px 12px;font-size:0.8rem}
+.btn-info{background:#EBF5FB;color:var(--blue);border:1px solid #AED6F1}
+.btn-info:hover{background:#D6EAF8}
+/* TAG */
+.tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:600}
+.tag-green{background:var(--green-pale);color:var(--green-dark)}
+.tag-red{background:#FDEDEC;color:var(--red)}
+.tag-orange{background:#FEF9E7;color:#A04000}
+.tag-blue{background:#EBF5FB;color:#1A5276}
+.tag-gray{background:#F4F6F7;color:#5D6D7E}
+/* UTENSIL GRID */
+.utensil-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
+.utensil-item{border:2px solid var(--border);border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s;user-select:none}
+.utensil-item:hover{border-color:var(--green-light);background:var(--green-pale)}
+.utensil-item.active{border-color:var(--green-dark);background:var(--green-pale);box-shadow:0 0 0 3px rgba(62,90,48,0.12)}
+.utensil-item .icon{font-size:1.8rem;margin-bottom:6px}
+.utensil-item .name{font-size:0.82rem;color:var(--text);font-weight:600}
+.utensil-item .note{font-size:0.7rem;color:var(--text3);margin-top:2px}
+.utensil-item.owned .name::after{content:' ✓';color:var(--green-dark)}
+/* INGREDIENT SECTION */
+.ingredient-form{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:10px;align-items:end;margin-bottom:18px}
+.ingredient-form label{font-size:0.8rem;color:var(--text2);font-weight:600;margin-bottom:4px;display:block}
+.ingredient-form input,.ingredient-form select{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:0.88rem;color:var(--text);background:#fff;transition:border .2s}
+.ingredient-form input:focus,.ingredient-form select:focus{outline:none;border-color:var(--green-light)}
+.ingredient-table{width:100%;border-collapse:collapse}
+.ingredient-table th{background:var(--green-dark);color:#fff;padding:10px 12px;font-size:0.82rem;text-align:left;font-weight:600}
+.ingredient-table th:first-child{border-radius:8px 0 0 0}
+.ingredient-table th:last-child{border-radius:0 8px 0 0}
+.ingredient-table td{padding:10px 12px;border-bottom:1px solid var(--border);font-size:0.85rem;vertical-align:middle}
+.ingredient-table tr:last-child td{border-bottom:none}
+.ingredient-table tr:hover td{background:var(--green-pale)}
+.stock-bar{height:6px;border-radius:3px;background:var(--border);overflow:hidden;width:80px;display:inline-block;vertical-align:middle;margin-right:6px}
+.stock-bar-fill{height:100%;border-radius:3px;transition:width .3s}
+/* CATEGORY TABS */
+.category-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.cat-tab{padding:6px 16px;border-radius:20px;border:1.5px solid var(--border);font-size:0.82rem;cursor:pointer;transition:all .2s;background:#fff;color:var(--text2);font-weight:600}
+.cat-tab.active,.cat-tab:hover{background:var(--green-dark);color:#fff;border-color:var(--green-dark)}
+/* RECIPE GRID */
+.recipe-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+.recipe-card{border:1.5px solid var(--border);border-radius:12px;overflow:hidden;transition:all .2s;background:#fff}
+.recipe-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-3px)}
+.recipe-card-img{background:linear-gradient(135deg,#E8F5D8,#C8E6A0);height:130px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative}
+.recipe-card-img .cal-badge{position:absolute;top:10px;right:10px;background:rgba(62,90,48,0.85);color:#fff;font-size:0.72rem;padding:3px 9px;border-radius:20px;font-weight:700}
+.recipe-card-img .diff-badge{position:absolute;top:10px;left:10px;font-size:0.72rem;padding:3px 9px;border-radius:20px;font-weight:700}
+.recipe-card-body{padding:14px}
+.recipe-card-body h3{font-size:0.95rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.recipe-card-body .ingredients-list{font-size:0.78rem;color:var(--text2);margin-bottom:8px;line-height:1.6}
+.recipe-card-body .time-info{display:flex;gap:12px;font-size:0.75rem;color:var(--text3)}
+.recipe-card-meta{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-top:1px solid var(--border);background:#fafafa}
+.nutrition-row{display:flex;gap:16px;flex-wrap:wrap}
+.nutrition-item{text-align:center}
+.nutrition-item .val{font-size:1rem;font-weight:700;color:var(--green-dark)}
+.nutrition-item .lab{font-size:0.7rem;color:var(--text3)}
+/* MEAL PLAN */
+.meal-plan-tabs{display:flex;gap:0;margin-bottom:16px;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;width:fit-content}
+.meal-tab{padding:8px 20px;font-size:0.85rem;cursor:pointer;background:#fff;color:var(--text2);font-weight:600;transition:all .2s;border:none}
+.meal-tab.active{background:var(--green-dark);color:#fff}
+/* HEALTH TIPS */
+.tips-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.tip-card{border-radius:12px;padding:18px;position:relative;overflow:hidden;transition:all .2s}
+.tip-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover)}
+.tip-card .tip-icon{font-size:2rem;margin-bottom:10px}
+.tip-card h3{font-size:0.95rem;font-weight:700;margin-bottom:6px}
+.tip-card p{font-size:0.82rem;line-height:1.7;opacity:.85}
+.tip-card .tip-source{font-size:0.72rem;opacity:.6;margin-top:8px;display:flex;align-items:center;gap:4px}
+.tip-card.green{background:linear-gradient(135deg,#E8F5D8,#D0EBB0);color:var(--green-dark)}
+.tip-card.blue{background:linear-gradient(135deg,#EBF5FB,#CCE4F7);color:#1A5276}
+.tip-card.orange{background:linear-gradient(135deg,#FEF9E7,#FDEBD0);color:#784212}
+.tip-card.purple{background:linear-gradient(135deg,#F5EEF8,#E8DAEF);color:#512E5F}
+.tip-card.red{background:linear-gradient(135deg,#FDEDEC,#FADBD8);color:#7B241C}
+.tip-card.teal{background:linear-gradient(135deg,#E8F8F5,#C8EBE4);color:#0E6655}
+/* SUGGESTION CARDS */
+.suggestion-list{display:flex;flex-direction:column;gap:12px}
+.suggestion-item{display:flex;gap:14px;align-items:flex-start;padding:14px;border-radius:10px;border:1.5px solid var(--border);background:#fff;transition:all .2s}
+.suggestion-item:hover{border-color:var(--green-light);background:var(--green-pale)}
+.suggestion-item .s-icon{font-size:1.6rem;flex-shrink:0}
+.suggestion-item .s-body h4{font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:4px}
+.suggestion-item .s-body p{font-size:0.82rem;color:var(--text2);line-height:1.6}
+.priority-high{border-left:4px solid var(--red)!important}
+.priority-mid{border-left:4px solid var(--orange)!important}
+.priority-low{border-left:4px solid var(--green-light)!important}
+/* HISTORY LOG */
+.history-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.history-day{border:1.5px solid var(--border);border-radius:10px;padding:14px;background:#fff}
+.history-day .date{font-size:0.75rem;color:var(--text3);font-weight:600;margin-bottom:8px}
+.history-day .meals{display:flex;flex-direction:column;gap:4px}
+.history-day .meal-item{font-size:0.82rem;display:flex;align-items:center;gap:6px;color:var(--text2)}
+.history-day .total-cal{margin-top:8px;font-size:0.8rem;font-weight:700;color:var(--green-dark);border-top:1px solid var(--border);padding-top:6px}
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:16px;max-width:520px;width:92%;max-height:85vh;overflow-y:auto;padding:28px;box-shadow:0 8px 40px rgba(0,0,0,0.18)}
+.modal h2{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:16px;padding-bottom:12px;border-bottom:1.5px solid var(--border)}
+.modal-close{float:right;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--text3);margin-top:-4px}
+.modal-close:hover{color:var(--red)}
+/* FORM ROW */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.form-group label{font-size:0.82rem;color:var(--text2);font-weight:600}
+.form-group input,.form-group select,.form-group textarea{padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:0.88rem;color:var(--text);font-family:inherit;transition:border .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--green-light)}
+/* TOAST */
+.toast-container{position:fixed;bottom:28px;right:28px;z-index:300;display:flex;flex-direction:column;gap:10px}
+.toast{padding:12px 20px;border-radius:10px;font-size:0.88rem;font-weight:600;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,0.18);animation:slideIn .3s ease;display:flex;align-items:center;gap:8px;max-width:320px}
+.toast.success{background:#27AE60}
+.toast.error{background:var(--red)}
+.toast.info{background:#2980B9}
+.toast.warning{background:var(--orange)}
+@keyframes slideIn{from{transform:translateX(120%);opacity:0}to{transform:translateX(0);opacity:1}}
+/* SCROLL TOP */
+.scroll-top{position:fixed;bottom:28px;left:28px;background:var(--green-dark);color:#fff;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;box-shadow:var(--shadow);transition:all .2s;z-index:90}
+.scroll-top:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover)}
+/* PROGRESS RING */
+.progress-ring{display:inline-flex;align-items:center;justify-content:center;position:relative}
+/* DIVIDER */
+.divider{height:1.5px;background:var(--border);margin:16px 0}
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:40px 20px;color:var(--text3)}
+.empty-state .es-icon{font-size:3rem;margin-bottom:12px}
+.empty-state p{font-size:0.9rem}
+/* CALORIE BAR */
+.calorie-summary{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:18px;background:var(--green-pale);border-radius:10px;padding:16px 20px}
+.cal-item{display:flex;flex-direction:column;align-items:center;min-width:80px}
+.cal-item .val{font-size:1.4rem;font-weight:800;color:var(--green-dark)}
+.cal-item .lab{font-size:0.72rem;color:var(--text2)}
+.cal-progress-bar{flex:1;min-width:200px;display:flex;flex-direction:column;justify-content:center}
+.cal-progress-bar .bar-label{font-size:0.8rem;color:var(--text2);margin-bottom:6px;display:flex;justify-content:space-between}
+.cal-progress-bar .bar{height:12px;border-radius:6px;background:#e0e0e0;overflow:hidden}
+.cal-progress-bar .bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--green-light),var(--green-dark));transition:width .5s}
+/* FLEX UTILS */
+.flex{display:flex}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.gap-8{gap:8px}.gap-12{gap:12px}.gap-16{gap:16px}.justify-between{justify-content:space-between}.mb-12{margin-bottom:12px}.mb-16{margin-bottom:16px}.mb-20{margin-bottom:20px}
+/* FOOTER */
+footer{background:var(--green-dark);color:rgba(255,255,255,0.75);text-align:center;padding:24px;margin-top:40px;font-size:0.82rem}
+footer strong{color:#fff}
+/* RESPONSIVE */
+@media(max-width:768px){
+  .ingredient-form{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  .hero h1{font-size:1.5rem}
+  .nav-links{display:none}
+  .hero-stats{gap:18px}
+  .calorie-summary{gap:12px}
+}
+@media(max-width:480px){
+  .ingredient-form{grid-template-columns:1fr}
+  .utensil-grid{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-brand"><span>🥦</span> 居家健康厨房</div>
+    <div class="nav-links">
+      <a href="#utensils">🍳 器具</a>
+      <a href="#ingredients">🥬 食材库</a>
+      <a href="#menu">📋 菜单生成</a>
+      <a href="#suggestions">💡 补货建议</a>
+      <a href="#health-tips">🌿 健康知识</a>
+    </div>
+  </div>
+</nav>
+
+<!-- INFO BAR -->
+<div class="infobar">
+  <span>📅 <span id="today-date"></span></span>
+  <span>⏰ <span id="today-time"></span></span>
+  <span>🌡️ 今日饮食目标：<strong style="color:#A8D878">1800 kcal</strong></span>
+  <span>💧 饮水提醒：每日 8 杯水</span>
+  <span id="cloud-status" style="display:none">☁️ <span id="cloud-status-text">未连接</span></span>
+  <button class="btn btn-sm" id="cloud-btn" onclick="openModal('modal-cloud')" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);padding:3px 12px;font-size:0.78rem">☁️ 云同步设置</button>
+  <button class="btn btn-sm" id="sync-btn" onclick="syncFromCloud()" style="display:none;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);padding:3px 12px;font-size:0.78rem">⬇️ 同步</button>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <h1>🌿 居家健康厨房</h1>
+    <p>基于家中现有食材与器具，智能生成每日健康菜单<br>科学养生 · 热量追踪 · 库存管理 · 营养均衡</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num" id="stat-ingredients">0</div><div class="lab">当前食材</div></div>
+      <div class="hero-stat"><div class="num" id="stat-recipes">0</div><div class="lab">可做菜品</div></div>
+      <div class="hero-stat"><div class="num" id="stat-calories">0</div><div class="lab">今日摄入 kcal</div></div>
+      <div class="hero-stat"><div class="num" id="stat-days">7</div><div class="lab">健康记录天数</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ===== UTENSILS ===== -->
+<div class="section-card" id="utensils">
+  <div class="section-header">
+    <h2><span>🍳</span> 厨房器具</h2>
+    <div class="flex gap-8">
+      <span id="utensil-count" class="tag tag-green">已选 0 件</span>
+      <button class="btn btn-outline btn-sm" onclick="saveUtensils()" style="color:#fff;border-color:rgba(255,255,255,0.5)">💾 保存设置</button>
+    </div>
+  </div>
+  <div class="section-body">
+    <p style="font-size:0.85rem;color:var(--text2);margin-bottom:16px">✅ 勾选家中现有器具，菜单将只推荐能制作的菜品。绿色打勾为已标记拥有。</p>
+    <div class="utensil-grid" id="utensil-grid"></div>
+  </div>
+</div>
+
+<!-- ===== INGREDIENTS ===== -->
+<div class="section-card" id="ingredients">
+  <div class="section-header">
+    <h2><span>🥬</span> 食材库存管理</h2>
+    <div class="flex gap-8">
+      <span id="ing-count" class="tag tag-green">0 种食材</span>
+      <button class="btn btn-success btn-sm" onclick="openAddIngredient()">+ 添加食材</button>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="category-tabs" id="ing-cat-tabs">
+      <div class="cat-tab active" data-cat="all" onclick="filterIngredients('all',this)">全部</div>
+      <div class="cat-tab" data-cat="蔬菜" onclick="filterIngredients('蔬菜',this)">🥦 蔬菜</div>
+      <div class="cat-tab" data-cat="肉类" onclick="filterIngredients('肉类',this)">🥩 肉类</div>
+      <div class="cat-tab" data-cat="碳水" onclick="filterIngredients('碳水',this)">🍚 碳水</div>
+      <div class="cat-tab" data-cat="水果" onclick="filterIngredients('水果',this)">🍎 水果</div>
+      <div class="cat-tab" data-cat="豆类蛋类" onclick="filterIngredients('豆类蛋类',this)">🥚 豆/蛋</div>
+      <div class="cat-tab" data-cat="调味品" onclick="filterIngredients('调味品',this)">🧂 调味品</div>
+      <div class="cat-tab" data-cat="其他" onclick="filterIngredients('其他',this)">📦 其他</div>
+    </div>
+
+    <div id="ing-table-wrap">
+      <table class="ingredient-table">
+        <thead>
+          <tr>
+            <th>食材名称</th>
+            <th>分类</th>
+            <th>数量/重量</th>
+            <th>库存状态</th>
+            <th>热量(kcal/100g)</th>
+            <th>购入日期</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="ing-tbody"></tbody>
+      </table>
+      <div class="empty-state" id="ing-empty" style="display:none">
+        <div class="es-icon">🥕</div>
+        <p>还没有添加食材，点击右上角"添加食材"开始吧！</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MENU GENERATOR ===== -->
+<div class="section-card" id="menu">
+  <div class="section-header">
+    <h2><span>📋</span> 今日健康菜单</h2>
+    <div class="flex gap-8">
+      <button class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,0.5)" onclick="generateMenu()">🎲 重新生成</button>
+      <button class="btn btn-success btn-sm" onclick="adoptMenu()">✅ 采用此菜单</button>
+    </div>
+  </div>
+  <div class="section-body">
+    <!-- MEAL TABS -->
+    <div class="flex items-center justify-between mb-16 flex-wrap gap-8">
+      <div class="meal-plan-tabs">
+        <button class="meal-tab active" onclick="showMeal('breakfast',this)">🌅 早餐</button>
+        <button class="meal-tab" onclick="showMeal('lunch',this)">☀️ 午餐</button>
+        <button class="meal-tab" onclick="showMeal('dinner',this)">🌙 晚餐</button>
+        <button class="meal-tab" onclick="showMeal('snack',this)">🍎 加餐</button>
+      </div>
+      <button class="btn btn-info btn-sm" onclick="generateMenu()">⚡ 基于当前食材生成</button>
+    </div>
+
+    <!-- CALORIE SUMMARY -->
+    <div class="calorie-summary" id="calorie-summary">
+      <div class="cal-item"><div class="val" id="cal-total">0</div><div class="lab">总热量 kcal</div></div>
+      <div class="cal-item"><div class="val" id="cal-protein">0g</div><div class="lab">蛋白质</div></div>
+      <div class="cal-item"><div class="val" id="cal-carb">0g</div><div class="lab">碳水化合物</div></div>
+      <div class="cal-item"><div class="val" id="cal-fat">0g</div><div class="lab">脂肪</div></div>
+      <div class="cal-progress-bar">
+        <div class="bar-label"><span>热量进度</span><span id="cal-pct">0%</span></div>
+        <div class="bar"><div class="bar-fill" id="cal-bar-fill" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <!-- RECIPE GRID -->
+    <div class="recipe-grid" id="recipe-grid">
+      <div class="empty-state" style="grid-column:1/-1">
+        <div class="es-icon">👨‍🍳</div>
+        <p>点击上方"基于当前食材生成"，AI 将为您推荐适合今天的健康菜单！</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SHOPPING SUGGESTIONS ===== -->
+<div class="section-card" id="suggestions">
+  <div class="section-header">
+    <h2><span>🛒</span> 补货与食谱建议</h2>
+    <div class="flex gap-8">
+      <button class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,0.5)" onclick="generateSuggestions()">🔄 重新分析</button>
+    </div>
+  </div>
+  <div class="section-body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;flex-wrap:wrap" id="suggestions-layout">
+      <div>
+        <h3 style="font-size:0.9rem;color:var(--text2);font-weight:700;margin-bottom:12px">📉 库存不足提醒</h3>
+        <div class="suggestion-list" id="low-stock-list">
+          <div class="empty-state"><div class="es-icon">✅</div><p>库存充足，无需补货</p></div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:0.9rem;color:var(--text2);font-weight:700;margin-bottom:12px">🌟 明日食材与菜单建议</h3>
+        <div class="suggestion-list" id="next-day-list">
+          <div class="empty-state"><div class="es-icon">💡</div><p>添加食材后，将自动生成建议</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <h3 style="font-size:0.9rem;color:var(--text2);font-weight:700;margin-bottom:12px">📅 近7日饮食记录</h3>
+    <div class="history-grid" id="history-grid"></div>
+  </div>
+</div>
+
+<!-- ===== HEALTH TIPS ===== -->
+<div class="section-card" id="health-tips">
+  <div class="section-header">
+    <h2><span>🌿</span> 科学养生健康知识</h2>
+    <div class="flex gap-8">
+      <span class="tag tag-green">📚 基于最新科研</span>
+      <button class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,0.5)" onclick="refreshTips()">🔄 更新知识</button>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="category-tabs mb-16">
+      <div class="cat-tab active" onclick="filterTips('all',this)">全部</div>
+      <div class="cat-tab" onclick="filterTips('sugar',this)">🍬 控糖/低GI</div>
+      <div class="cat-tab" onclick="filterTips('nutrition',this)">💊 营养素</div>
+      <div class="cat-tab" onclick="filterTips('cooking',this)">🔥 烹饪方式</div>
+      <div class="cat-tab" onclick="filterTips('habit',this)">⏱️ 饮食习惯</div>
+      <div class="cat-tab" onclick="filterTips('gut',this)">🦠 肠道健康</div>
+    </div>
+    <div class="tips-grid" id="tips-grid"></div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<!-- SCROLL TOP -->
+<div class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<!-- FOOTER -->
+<footer>
+  <strong>🥦 居家健康厨房</strong> · 每日科学养生饮食管家<br>
+  <span style="font-size:0.76rem;margin-top:6px;display:block">基于食材库存智能生成菜单 · 热量追踪 · 低GI养生 · 数据仅供参考，请结合个人健康状况使用</span>
+</footer>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- CLOUD SYNC MODAL -->
+<div class="modal-overlay" id="modal-cloud">
+  <div class="modal" style="max-width:560px">
+    <button class="modal-close" onclick="closeModal('modal-cloud')">✕</button>
+    <h2>☁️ 云同步设置</h2>
+    <div style="background:#EBF5FB;border-radius:10px;padding:14px;margin-bottom:16px;font-size:0.82rem;color:#1A5276;line-height:1.7">
+      <strong>📌 使用说明</strong><br>
+      使用 <strong>JSONBin.io</strong> 免费云存储，实现家人数据共享。<br>
+      ① 访问 <a href="#" onclick="event.preventDefault()" style="color:#2980B9;font-weight:700">jsonbin.io</a> 免费注册（GitHub登录即可）<br>
+      ② 创建新的 Bin，复制 <strong>Bin ID</strong>（如 <code style="background:rgba(0,0,0,0.1);padding:1px 4px;border-radius:3px">$2a$10$xxx</code>）<br>
+      ③ 复制 <strong>Master Key</strong>（用于写入权限）<br>
+      ④ 填入下方并保存，即刻开始同步！
+    </div>
+    <div class="form-group">
+      <label>Bin ID（必填）</label>
+      <input type="text" id="cloud-bin" placeholder="$2a$10$xxxxxx — 从 jsonbin.io 复制">
+    </div>
+    <div class="form-group">
+      <label>Master Key（写入需要，读者可留空）</label>
+      <input type="password" id="cloud-key" placeholder="Master Key 用于同步上传">
+    </div>
+    <div id="cloud-connected-info" style="display:none;background:#E8F8F5;border-radius:8px;padding:12px;margin-bottom:12px;font-size:0.82rem;color:#0E6655">
+      <strong>✅ 已连接到云端</strong> — <span id="cloud-last-sync"></span>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+      <button class="btn btn-primary" onclick="saveCloudSettings()">💾 保存并连接</button>
+      <button class="btn btn-success" onclick="uploadToCloud()">⬆️ 上传数据到云端</button>
+      <button class="btn btn-info" onclick="syncFromCloud()">⬇️ 从云端下载</button>
+    </div>
+    <div class="divider"></div>
+    <h3 style="font-size:0.88rem;color:var(--text2);font-weight:700;margin-bottom:10px">📦 本地备份</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-outline" onclick="exportJSON()">📤 导出JSON备份</button>
+      <label class="btn btn-outline" style="cursor:pointer">📥 导入JSON备份<input type="file" accept=".json" style="display:none" onchange="importJSON(event)"></label>
+      <button class="btn btn-danger btn-sm" onclick="clearAllData()">🗑️ 清空所有数据</button>
+    </div>
+    <div id="cloud-error" style="display:none;margin-top:10px;padding:10px;background:#FDEDEC;border-radius:8px;color:#C0392B;font-size:0.82rem"></div>
+  </div>
+</div>
+
+<!-- ADD INGREDIENT MODAL -->
+<div class="modal-overlay" id="modal-add-ing">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-add-ing')">✕</button>
+    <h2 id="modal-ing-title">➕ 添加食材</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label>食材名称 *</label>
+        <input type="text" id="ing-name" placeholder="如：西蓝花、鸡胸肉…">
+      </div>
+      <div class="form-group">
+        <label>分类 *</label>
+        <select id="ing-cat">
+          <option value="蔬菜">🥦 蔬菜</option>
+          <option value="肉类">🥩 肉类</option>
+          <option value="碳水">🍚 碳水</option>
+          <option value="水果">🍎 水果</option>
+          <option value="豆类蛋类">🥚 豆类蛋类</option>
+          <option value="调味品">🧂 调味品</option>
+          <option value="其他">📦 其他</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>数量/重量</label>
+        <input type="text" id="ing-qty" placeholder="如：500g、2个、1把…">
+      </div>
+      <div class="form-group">
+        <label>库存量 (0-100%)</label>
+        <input type="number" id="ing-stock" min="0" max="100" value="80" placeholder="库存百分比">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>热量 (kcal/100g)</label>
+        <input type="number" id="ing-cal" placeholder="如：25、165…">
+      </div>
+      <div class="form-group">
+        <label>购入日期</label>
+        <input type="date" id="ing-date">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>备注（可选）</label>
+      <input type="text" id="ing-note" placeholder="如：有机产品、本地时令蔬菜…">
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px">
+      <button class="btn btn-outline" onclick="closeModal('modal-add-ing')">取消</button>
+      <button class="btn btn-primary" onclick="saveIngredient()">💾 保存食材</button>
+    </div>
+  </div>
+</div>
+
+<!-- RECIPE DETAIL MODAL -->
+<div class="modal-overlay" id="modal-recipe">
+  <div class="modal" style="max-width:600px">
+    <button class="modal-close" onclick="closeModal('modal-recipe')">✕</button>
+    <div id="modal-recipe-content"></div>
+  </div>
+</div>
+
+<script>
+// ===================== DATA =====================
+let APP = {
+  utensils: [],
+  ingredients: [],
+  menuHistory: [],
+  currentMenu: {},
+  editIngIndex: -1,
+  currentMeal: 'breakfast',
+  currentIngCat: 'all',
+  currentTipCat: 'all'
+};
+
+// ===================== UTENSILS DATA =====================
+const UTENSIL_DATA = [
+  {id:'wok',name:'炒菜锅',icon:'🍳',note:'煎炒烹炸',owned:true},
+  {id:'steam',name:'蒸锅',icon:'♨️',note:'清蒸食材',owned:true},
+  {id:'boil',name:'汤锅/煮锅',icon:'🥘',note:'煮汤炖菜',owned:false},
+  {id:'ricecooker',name:'电饭锅',icon:'🍚',note:'蒸煮米饭',owned:false},
+  {id:'microwave',name:'微波炉',icon:'📦',note:'加热复热',owned:false},
+  {id:'oven',name:'烤箱',icon:'🔆',note:'烘焙烤制',owned:false},
+  {id:'airfryer',name:'空气炸锅',icon:'💨',note:'少油炸烤',owned:false},
+  {id:'pressure',name:'高压锅',icon:'⚡',note:'快速炖煮',owned:false},
+  {id:'blender',name:'破壁机/榨汁',icon:'🌀',note:'果汁豆浆',owned:false},
+  {id:'nonstick',name:'不粘锅',icon:'🍽️',note:'低油煎制',owned:false},
+  {id:'bbq',name:'烤盘/电饼铛',icon:'🔥',note:'无油煎烤',owned:false},
+  {id:'casserole',name:'砂锅',icon:'🏺',note:'慢火炖汤',owned:false},
+];
+
+// ===================== RECIPES DATABASE =====================
+const RECIPE_DB = [
+  // 早餐
+  {id:'r1',name:'清蒸鸡蛋羹',emoji:'🥚',meal:'breakfast',utensils:['steam'],
+   ingredients:['鸡蛋','盐','生抽'],cal:75,protein:7,carb:1,fat:5,time:15,diff:1,
+   gi:'低GI',method:'清蒸',steps:['鸡蛋打散加1.5倍温水','加少许盐搅匀过筛','盖保鲜膜上锅蒸10分钟','出锅淋生抽和香油'],tip:'低卡高蛋白，适合减脂期'},
+  {id:'r2',name:'蒸红薯',emoji:'🍠',meal:'breakfast',utensils:['steam'],
+   ingredients:['红薯'],cal:99,protein:1,carb:24,fat:0,time:25,diff:1,
+   gi:'中GI',method:'清蒸',steps:['红薯洗净切段','冷水上锅大火蒸20分钟','竹签可穿透即可'],tip:'富含膳食纤维，饱腹感强'},
+  {id:'r3',name:'燕麦粥',emoji:'🥣',meal:'breakfast',utensils:['boil'],
+   ingredients:['燕麦','牛奶','香蕉'],cal:130,protein:5,carb:22,fat:3,time:10,diff:1,
+   gi:'低GI',method:'煮',steps:['牛奶倒入锅中小火加热','加入即食燕麦搅拌','加香蕉片和坚果'],tip:'β-葡聚糖降低餐后血糖'},
+  {id:'r4',name:'水煮蛋',emoji:'🥚',meal:'breakfast',utensils:['boil'],
+   ingredients:['鸡蛋'],cal:78,protein:6,carb:0,fat:5,time:10,diff:1,
+   gi:'低GI',method:'煮',steps:['冷水放入鸡蛋','中火烧开后计时7分钟','捞出冰水冷却剥壳'],tip:'全蛋含9种必需氨基酸'},
+  // 午餐
+  {id:'r5',name:'清炒西蓝花',emoji:'🥦',meal:'lunch',utensils:['wok'],
+   ingredients:['西蓝花','大蒜','橄榄油','盐'],cal:55,protein:4,carb:8,fat:2,time:10,diff:1,
+   gi:'低GI',method:'清炒',steps:['西蓝花分朵焯水30秒','锅热下蒜末炒香','加西蓝花大火翻炒','加盐出锅'],tip:'含丰富叶黄素和维C，抗氧化'},
+  {id:'r6',name:'番茄炒鸡蛋',emoji:'🍳',meal:'lunch',utensils:['wok'],
+   ingredients:['番茄','鸡蛋','盐','糖','葱'],cal:110,protein:8,carb:9,fat:5,time:15,diff:1,
+   gi:'低GI',method:'炒',steps:['番茄切块，鸡蛋打散','热锅炒鸡蛋至半熟先出锅','再下番茄炒出汁','加鸡蛋翻炒，少量盐糖调味'],tip:'番茄富含番茄红素，加油更易吸收'},
+  {id:'r7',name:'蒜蓉蒸虾',emoji:'🦐',meal:'lunch',utensils:['steam'],
+   ingredients:['虾','大蒜','生抽','香油'],cal:85,protein:18,carb:1,fat:1,time:12,diff:2,
+   gi:'低GI',method:'清蒸',steps:['虾背剪开去虾线','铺蒜蓉上锅蒸8分钟','生抽+香油调汁浇上'],tip:'高蛋白低脂肪，健身首选'},
+  {id:'r8',name:'清蒸鱼',emoji:'🐟',meal:'lunch',utensils:['steam'],
+   ingredients:['鱼','姜','葱','生抽','蒸鱼豉油'],cal:105,protein:20,carb:0,fat:2,time:20,diff:2,
+   gi:'低GI',method:'清蒸',steps:['鱼身划几刀，塞入姜片','上锅蒸10-12分钟','去掉蒸出的水','铺葱丝，淋热油和豉油'],tip:'鱼肉含Omega-3，对心脑血管有益'},
+  {id:'r9',name:'凉拌黄瓜',emoji:'🥒',meal:'lunch',utensils:['wok'],
+   ingredients:['黄瓜','大蒜','盐','醋','芝麻油','辣椒'],cal:35,protein:1,carb:7,fat:1,time:10,diff:1,
+   gi:'低GI',method:'凉拌',steps:['黄瓜用刀拍碎切段','加盐腌10分钟出水','倒掉水，加蒜末醋芝麻油','拌匀装盘'],tip:'热量极低，清爽开胃，适合夏季'},
+  {id:'r10',name:'炒豆腐',emoji:'🟡',meal:'lunch',utensils:['wok'],
+   ingredients:['北豆腐','酱油','香葱','盐','葱'],cal:120,protein:12,carb:4,fat:6,time:15,diff:1,
+   gi:'低GI',method:'煎炒',steps:['豆腐切块用厨房纸吸干水','热锅少油，豆腐煎至两面金黄','加酱油、盐调味','撒葱花出锅'],tip:'大豆蛋白完整，植物性优质蛋白'},
+  // 晚餐
+  {id:'r11',name:'蒸南瓜',emoji:'🎃',meal:'dinner',utensils:['steam'],
+   ingredients:['南瓜'],cal:22,protein:1,carb:5,fat:0,time:20,diff:1,
+   gi:'低GI',method:'清蒸',steps:['南瓜去皮切小块','上锅大火蒸15分钟','可淋少许蜂蜜或原味食用'],tip:'南瓜β-胡萝卜素丰富，有助护眼'},
+  {id:'r12',name:'炒时蔬',emoji:'🥬',meal:'dinner',utensils:['wok'],
+   ingredients:['菠菜','大蒜','盐','橄榄油'],cal:42,protein:3,carb:6,fat:1,time:8,diff:1,
+   gi:'低GI',method:'清炒',steps:['蒜末炝锅','大火快炒蔬菜约2分钟','加盐出锅'],tip:'绿叶菜富含叶酸和维K，每日必吃'},
+  {id:'r13',name:'蒸蛋羹配虾',emoji:'🍤',meal:'dinner',utensils:['steam'],
+   ingredients:['鸡蛋','虾','盐'],cal:115,protein:16,carb:1,fat:5,time:18,diff:2,
+   gi:'低GI',method:'清蒸',steps:['鸡蛋打散加1.5倍温水过筛','放上虾仁','蒸10分钟','淋生抽香油'],tip:'高蛋白晚餐，利于夜间肌肉修复'},
+  {id:'r14',name:'水煮菜配瘦肉',emoji:'🥗',meal:'dinner',utensils:['boil'],
+   ingredients:['猪里脊','绿叶菜','盐','姜'],cal:145,protein:22,carb:5,fat:4,time:20,diff:2,
+   gi:'低GI',method:'煮',steps:['里脊切薄片，加淀粉抓匀','烧开水放姜片','先汆蔬菜，再放肉片','加盐调味'],tip:'低脂烹饪法，保留最多营养'},
+  {id:'r15',name:'三色炒饭',emoji:'🍳',meal:'lunch',utensils:['wok'],
+   ingredients:['米饭','鸡蛋','胡萝卜','玉米','盐','葱'],cal:320,protein:10,carb:52,fat:7,time:15,diff:2,
+   gi:'中GI',method:'炒',steps:['热锅油炒蛋液至半熟','加胡萝卜玉米粒炒熟','加隔夜米饭大火翻炒','加盐葱花出锅'],tip:'隔夜米饭淀粉回生，GI更低'},
+  // 加餐
+  {id:'r16',name:'水果拼盘',emoji:'🍎',meal:'snack',utensils:[],
+   ingredients:['苹果','蓝莓','草莓'],cal:65,protein:1,carb:16,fat:0,time:5,diff:1,
+   gi:'低GI',method:'生食',steps:['水果洗净','切块或整颗摆盘'],tip:'苹果果胶喂养益生菌，助肠道健康'},
+  {id:'r17',name:'坚果一小把',emoji:'🥜',meal:'snack',utensils:[],
+   ingredients:['核桃','杏仁'],cal:185,protein:5,carb:8,fat:16,time:1,diff:1,
+   gi:'低GI',method:'生食',steps:['取约25g混合坚果食用'],tip:'富含Omega-3和维E，控制在25g内'},
+  {id:'r18',name:'蒸玉米',emoji:'🌽',meal:'snack',utensils:['steam'],
+   ingredients:['玉米'],cal:86,protein:3,carb:19,fat:1,time:20,diff:1,
+   gi:'中GI',method:'清蒸',steps:['玉米剥去外皮留两层内叶','冷水上锅大火蒸20分钟'],tip:'膳食纤维丰富，比面包饱腹感更强'},
+];
+
+// ===================== HEALTH TIPS =====================
+const TIPS_DATA = [
+  {cat:'sugar',color:'green',icon:'🍬',
+   title:'低GI饮食：稳定血糖的关键',
+   body:'GI（血糖生成指数）低于55的食物可减缓血糖上升。燕麦、豆类、绿叶蔬菜均为低GI选择。研究证明，长期低GI饮食可降低2型糖尿病风险37%。',
+   source:'《Lancet》2019年系统综述'},
+  {cat:'sugar',color:'orange',icon:'📉',
+   title:'进餐顺序影响血糖：先蔬菜后主食',
+   body:'日本康奈尔大学研究证明，先吃蔬菜（膳食纤维），再吃蛋白质，最后吃碳水，可使餐后血糖峰值降低29%。同样的食物，顺序不同，效果截然不同。',
+   source:'《Diabetes Care》2017'},
+  {cat:'nutrition',color:'blue',icon:'🥦',
+   title:'十字花科蔬菜：每日必吃',
+   body:'西蓝花、卷心菜、花椰菜富含萝卜硫素，是迄今研究最充分的天然抗癌成分之一。每周3-5次十字花科蔬菜可降低多种癌症风险。轻焯水（非过度加热）保留更多活性物质。',
+   source:'《Cancer Research》2020'},
+  {cat:'nutrition',color:'teal',icon:'🫙',
+   title:'发酵食物改善肠道菌群',
+   body:'斯坦福大学2021年研究表明，高发酵食物饮食（酸奶、泡菜、味噌）10周后，肠道菌群多样性显著增加，炎症指标下降。比高纤维饮食对菌群的直接提升作用更快。',
+   source:'《Cell》2021'},
+  {cat:'nutrition',color:'purple',icon:'🐟',
+   title:'Omega-3：现代人最缺乏的脂肪酸',
+   body:'深海鱼（三文鱼、沙丁鱼、鲭鱼）、亚麻籽、核桃富含EPA/DHA。每周吃两次深海鱼，可降低心血管疾病风险30%，还对抑郁和大脑功能有益。',
+   source:'《NEJM》2018'},
+  {cat:'cooking',color:'orange',icon:'🔥',
+   title:'油温控制：避免有害物质产生',
+   body:'橄榄油烟点约180°C，超过后产生醛类有害物质。家庭炒菜建议使用花生油或稻米油（烟点220°C+）。避免反复使用煎炸油。清蒸和水煮是最健康的烹饪方式，保留最多营养素。',
+   source:'《Food Chemistry》2018'},
+  {cat:'cooking',color:'green',icon:'⏱️',
+   title:'蔬菜焯水时间不超过2分钟',
+   body:'绿叶蔬菜中的维C和叶酸在过长加热后大量流失，焯水以30秒-1分钟为佳，大火快炒不超过2分钟。研究显示，蒸比煮保留更多水溶性维生素。',
+   source:'《J. Food Science》2019'},
+  {cat:'habit',color:'blue',icon:'🕐',
+   title:'进食时间窗口：8小时限时饮食',
+   body:'将每日所有进食控制在8小时内（如8:00-16:00或10:00-18:00），其余16小时禁食，称为"16:8间歇性断食"。多项研究证明可降低体重、改善胰岛素敏感性，且不影响肌肉量。',
+   source:'《Cell Metabolism》2022'},
+  {cat:'habit',color:'green',icon:'🐌',
+   title:'细嚼慢咽：每口咀嚼20次',
+   body:'咀嚼刺激分泌胆囊收缩素，此激素约20分钟后告知大脑"已饱"。快速进食者比慢食者体重平均高3.9kg。建议放下筷子咀嚼，每餐至少花20分钟以上。',
+   source:'《BMJ Open》2018'},
+  {cat:'habit',color:'orange',icon:'💧',
+   title:'餐前30分钟喝水有助减少热量摄入',
+   body:'英国伯明翰大学研究表明，餐前30分钟喝500ml水，12周内体重减少约1.3kg，且无需节食。水充填胃部，减少食物摄入量约22%，同时促进代谢。',
+   source:'《Obesity》2015'},
+  {cat:'gut',color:'teal',icon:'🦠',
+   title:'肠道健康是第二大脑',
+   body:'肠道拥有约1亿个神经元，95%的血清素在肠道产生。肠道菌群影响免疫、情绪、体重。每天摄入30种以上不同植物性食物（包括蔬菜、水果、豆类、谷物、香料）可最大化菌群多样性。',
+   source:'《Nature》2022'},
+  {cat:'gut',color:'purple',icon:'🌾',
+   title:'膳食纤维：每日目标25-30g',
+   body:'大多数人每日仅摄入10-15g纤维，远低于推荐量。可溶性纤维（燕麦、豆类、苹果果胶）喂养有益菌；不溶性纤维（全谷物、蔬菜）促进肠蠕动。高纤维饮食降低结肠癌风险40%。',
+   source:'《Lancet》2019'},
+  {cat:'sugar',color:'red',icon:'⚠️',
+   title:'警惕隐性糖：酱汁和加工食品',
+   body:'超市常见的番茄酱、沙拉酱、蚝油、老抽中含有大量添加糖。建议阅读食品标签，每100g含糖超过5g即为高糖。用柠檬汁、醋、香料替代重口味酱料，减少隐性糖摄入。',
+   source:'WHO 2023年膳食指南'},
+  {cat:'nutrition',color:'blue',icon:'☀️',
+   title:'维生素D缺乏：现代最普遍的营养问题',
+   body:'研究估计全球超40%人口维生素D不足。维D参与免疫调节、骨骼健康、情绪稳定。食物来源有限（三文鱼、蛋黄），建议每天日晒15-20分钟（不涂防晒，手臂暴露）或在医生指导下补充。',
+   source:'《J. Clinical Endocrinology》2023'},
+  {cat:'cooking',color:'teal',icon:'🧄',
+   title:'大蒜素：切碎后静置10分钟再加热',
+   body:'大蒜切碎后与空气接触10分钟，大蒜素充分生成后再烹饪，可保留更多活性物质。研究显示大蒜素有抗菌、降血压、降胆固醇的作用，是天然的"天然抗生素"。',
+   source:'《Journal of Nutrition》2016'},
+];
+
+// ===================== DEFAULT INGREDIENTS =====================
+const DEFAULT_INGREDIENTS = [
+  {name:'西蓝花',cat:'蔬菜',qty:'300g',stock:80,cal:34,date:'2026-04-26',note:'有机'},
+  {name:'菠菜',cat:'蔬菜',qty:'200g',stock:60,cal:23,date:'2026-04-26',note:''},
+  {name:'番茄',cat:'蔬菜',qty:'4个',stock:70,cal:18,date:'2026-04-25',note:''},
+  {name:'黄瓜',cat:'蔬菜',qty:'2根',stock:85,cal:16,date:'2026-04-26',note:''},
+  {name:'鸡蛋',cat:'豆类蛋类',qty:'8个',stock:80,cal:143,date:'2026-04-24',note:'土鸡蛋'},
+  {name:'鸡胸肉',cat:'肉类',qty:'400g',stock:50,cal:113,date:'2026-04-25',note:'去皮'},
+  {name:'大蒜',cat:'蔬菜',qty:'1头',stock:90,cal:149,date:'2026-04-20',note:''},
+  {name:'姜',cat:'调味品',qty:'1块',stock:70,cal:80,date:'2026-04-20',note:''},
+  {name:'燕麦',cat:'碳水',qty:'500g',stock:75,cal:379,date:'2026-04-01',note:'即食燕麦'},
+  {name:'苹果',cat:'水果',qty:'3个',stock:60,cal:52,date:'2026-04-25',note:''},
+  {name:'橄榄油',cat:'调味品',qty:'500ml',stock:65,cal:884,date:'2026-03-15',note:'特级初榨'},
+  {name:'盐',cat:'调味品',qty:'500g',stock:90,cal:0,date:'2026-03-01',note:''},
+];
+
+// ===================== CLOUD SYNC =====================
+const CLOUD_ENDPOINT = 'https://api.jsonbin.io/v3/b';
+
+function getCloudSettings(){
+  return {
+    binId: localStorage.getItem('hkk_bin') || '',
+    key: localStorage.getItem('hkk_key') || ''
+  };
+}
+function updateCloudUI(){
+  const settings = getCloudSettings();
+  const hasBin = !!settings.binId;
+  const el = document.getElementById('cloud-status');
+  const btn = document.getElementById('cloud-btn');
+  const syncBtn = document.getElementById('sync-btn');
+  const info = document.getElementById('cloud-connected-info');
+  if(hasBin){
+    el.style.display='';
+    syncBtn.style.display='';
+    document.getElementById('cloud-status-text').textContent = '☁️ 云端已连接';
+    document.getElementById('cloud-bin').value = settings.binId;
+    document.getElementById('cloud-key').value = settings.key;
+    const last = localStorage.getItem('hkk_last_sync');
+    if(last){
+      info.style.display='';
+      document.getElementById('cloud-last-sync').textContent = '上次同步：'+last;
+    }
+  } else {
+    el.style.display='none';
+    syncBtn.style.display='none';
+    info.style.display='none';
+  }
+}
+function saveCloudSettings(){
+  const bin = document.getElementById('cloud-bin').value.trim().replace(/^https?:\/\/api\.jsonbin\.io\/v3\/b\//,'').replace(/\/.*/,'');
+  const key = document.getElementById('cloud-key').value.trim();
+  if(!bin){ showToast('请输入 Bin ID','error'); return; }
+  localStorage.setItem('hkk_bin', bin);
+  localStorage.setItem('hkk_key', key);
+  updateCloudUI();
+  showToast('✅ 云端设置已保存','success');
+  // Try to fetch current cloud data
+  fetch(`${CLOUD_ENDPOINT}/${bin}/latest`, {
+    headers: {'X-Access-Key': key || localStorage.getItem('hkk_read_key') || ''}
+  }).then(r=>r.ok?r.json():Promise.reject()).then(()=>{
+    document.getElementById('cloud-status-text').textContent = '☁️ 云端已连接';
+    showToast('✅ 云端连接成功！','success');
+  }).catch(()=>{
+    document.getElementById('cloud-status-text').textContent = '⚠️ 请检查Bin ID是否正确';
+  });
+}
+async function uploadToCloud(){
+  const settings = getCloudSettings();
+  if(!settings.binId){ showToast('请先设置 Bin ID','error'); return; }
+  const payload = {
+    utensils: APP.utensils,
+    ingredients: APP.ingredients,
+    menuHistory: APP.menuHistory,
+    updatedAt: new Date().toISOString()
+  };
+  try {
+    const res = await fetch(`${CLOUD_ENDPOINT}/${settings.binId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': settings.key,
+        'X-Bin-Name': 'healthy-kitchen'
+      },
+      body: JSON.stringify(payload)
+    });
+    if(!res.ok) throw new Error('上传失败');
+    localStorage.setItem('hkk_last_sync', new Date().toLocaleString('zh-CN'));
+    saveData();
+    updateCloudUI();
+    showToast('⬆️ 数据已上传到云端','success');
+  } catch(e){
+    showToast('⬆️ 上传失败：'+e.message,'error');
+  }
+}
+async function syncFromCloud(){
+  const settings = getCloudSettings();
+  if(!settings.binId){ showToast('请先设置 Bin ID','error'); return; }
+  try {
+    const res = await fetch(`${CLOUD_ENDPOINT}/${settings.binId}/latest`, {
+      headers: {'X-Access-Key': settings.key || ''}
+    });
+    if(!res.ok) throw new Error('获取失败，请检查Bin ID和权限');
+    const json = await res.json();
+    const data = json.record || json;
+    if(data.ingredients) APP.ingredients = data.ingredients;
+    if(data.utensils) APP.utensils = data.utensils;
+    if(data.menuHistory) APP.menuHistory = data.menuHistory;
+    localStorage.setItem('hkk_last_sync', new Date().toLocaleString('zh-CN'));
+    saveData();
+    renderUtensils();
+    renderIngredients();
+    renderHistory();
+    generateSuggestions();
+    updateStats();
+    updateCloudUI();
+    showToast('⬇️ 云端数据已同步到本地','success');
+  } catch(e){
+    showToast('⬇️ 同步失败：'+e.message,'error');
+  }
+}
+function exportJSON(){
+  const data = JSON.stringify({utensils:APP.utensils,ingredients:APP.ingredients,menuHistory:APP.menuHistory,exportedAt:new Date().toISOString()}, null, 2);
+  const blob = new Blob([data], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `健康厨房备份_${new Date().toLocaleDateString('zh-CN').replace(/\//g,'-')}.json`;
+  a.click(); URL.revokeObjectURL(url);
+  showToast('📤 JSON备份已导出','success');
+}
+function importJSON(event){
+  const file = event.target.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if(data.ingredients) APP.ingredients = data.ingredients;
+      if(data.utensils) APP.utensils = data.utensils;
+      if(data.menuHistory) APP.menuHistory = data.menuHistory;
+      saveData();
+      renderUtensils();
+      renderIngredients();
+      renderHistory();
+      generateSuggestions();
+      updateStats();
+      showToast('📥 数据已导入成功','success');
+    } catch(err){ showToast('❌ 文件格式错误','error'); }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+function clearAllData(){
+  if(!confirm('确定要清空所有本地数据吗？此操作不可恢复！')) return;
+  APP = {utensils:[],ingredients:[],menuHistory:[],currentMenu:{},editIngIndex:-1,currentMeal:'breakfast',currentIngCat:'all',currentTipCat:'all'};
+  localStorage.removeItem('hkk_data');
+  localStorage.removeItem('hkk_bin');
+  localStorage.removeItem('hkk_key');
+  localStorage.removeItem('hkk_last_sync');
+  renderUtensils();
+  renderIngredients();
+  renderHistory();
+  renderTips();
+  generateSuggestions();
+  updateStats();
+  updateCloudUI();
+  showToast('🗑️ 所有数据已清空','warning');
+}
+
+// ===================== INIT =====================
+function init(){
+  const saved = localStorage.getItem('hkk_data');
+  if(saved){
+    try{ APP = {...APP,...JSON.parse(saved)}; }catch(e){}
+  } else {
+    APP.ingredients = DEFAULT_INGREDIENTS.map((x,i)=>({...x,id:Date.now()+i}));
+    APP.utensils = ['wok','steam'];
+    generateHistory();
+  }
+  renderUtensils();
+  renderIngredients();
+  renderTips();
+  renderHistory();
+  generateSuggestions();
+  updateStats();
+  updateDateTime();
+  updateCloudUI();
+  setInterval(updateDateTime, 1000);
+}
+
+// ===================== DATETIME =====================
+function updateDateTime(){
+  const now = new Date();
+  const days=['日','一','二','三','四','五','六'];
+  document.getElementById('today-date').textContent =
+    `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 星期${days[now.getDay()]}`;
+  document.getElementById('today-time').textContent =
+    now.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+
+// ===================== STATS =====================
+function updateStats(){
+  const total = APP.ingredients.length;
+  document.getElementById('stat-ingredients').textContent = total;
+  // count available recipes
+  const sel = APP.utensils;
+  const avail = RECIPE_DB.filter(r=>r.utensils.every(u=>sel.includes(u))||r.utensils.length===0);
+  document.getElementById('stat-recipes').textContent = avail.length;
+  // today cal
+  let tc = 0;
+  if(APP.currentMenu){
+    Object.values(APP.currentMenu).forEach(recipes=>{
+      if(Array.isArray(recipes)) recipes.forEach(r=>{ tc += r.cal||0; });
+    });
+  }
+  document.getElementById('stat-calories').textContent = tc;
+}
+
+// ===================== UTENSILS =====================
+function renderUtensils(){
+  const grid = document.getElementById('utensil-grid');
+  grid.innerHTML = UTENSIL_DATA.map(u=>`
+    <div class="utensil-item ${APP.utensils.includes(u.id)?'active':''} ${u.owned?'owned':''}"
+         onclick="toggleUtensil('${u.id}',this)" id="ut-${u.id}">
+      <div class="icon">${u.icon}</div>
+      <div class="name">${u.name}</div>
+      <div class="note">${u.note}</div>
+    </div>
+  `).join('');
+  updateUtensilCount();
+}
+function toggleUtensil(id,el){
+  const idx = APP.utensils.indexOf(id);
+  if(idx>=0){ APP.utensils.splice(idx,1); el.classList.remove('active'); }
+  else { APP.utensils.push(id); el.classList.add('active'); }
+  updateUtensilCount();
+}
+function updateUtensilCount(){
+  document.getElementById('utensil-count').textContent = `已选 ${APP.utensils.length} 件`;
+}
+function saveUtensils(){
+  saveData();
+  showToast('✅ 器具设置已保存','success');
+  updateStats();
+}
+
+// ===================== INGREDIENTS =====================
+function renderIngredients(cat){
+  const tbody = document.getElementById('ing-tbody');
+  const empty = document.getElementById('ing-empty');
+  const filter = cat || APP.currentIngCat;
+  let list = filter==='all'? APP.ingredients : APP.ingredients.filter(i=>i.cat===filter);
+  document.getElementById('ing-count').textContent = `${APP.ingredients.length} 种食材`;
+  if(!list.length){ tbody.innerHTML=''; empty.style.display=''; return; }
+  empty.style.display='none';
+  const catIcon={蔬菜:'🥦',肉类:'🥩',碳水:'🍚',水果:'🍎',豆类蛋类:'🥚',调味品:'🧂',其他:'📦'};
+  tbody.innerHTML = list.map((ing,i)=>{
+    const realIdx = APP.ingredients.indexOf(ing);
+    const pct = ing.stock||0;
+    const color = pct>60?'#5cb85c':pct>30?'#f0ad4e':'#d9534f';
+    const status = pct>60?'<span class="tag tag-green">充足</span>':pct>30?'<span class="tag tag-orange">偏少</span>':'<span class="tag tag-red">不足</span>';
+    return `<tr>
+      <td><strong>${ing.name}</strong> ${ing.note?`<span style="font-size:.72rem;color:var(--text3)">(${ing.note})</span>`:''}  </td>
+      <td>${catIcon[ing.cat]||'📦'} ${ing.cat}</td>
+      <td>${ing.qty||'-'}</td>
+      <td>${status} <div class="stock-bar"><div class="stock-bar-fill" style="width:${pct}%;background:${color}"></div></div>${pct}%</td>
+      <td>${ing.cal?ing.cal+' kcal':'-'}</td>
+      <td>${ing.date||'-'}</td>
+      <td><div class="flex gap-8">
+        <button class="btn btn-outline btn-sm" onclick="editIngredient(${realIdx})">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteIngredient(${realIdx})">🗑️</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+  updateStats();
+}
+function filterIngredients(cat,el){
+  APP.currentIngCat = cat;
+  document.querySelectorAll('#ing-cat-tabs .cat-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderIngredients(cat);
+}
+function openAddIngredient(){
+  APP.editIngIndex = -1;
+  document.getElementById('modal-ing-title').textContent = '➕ 添加食材';
+  document.getElementById('ing-name').value='';
+  document.getElementById('ing-cat').value='蔬菜';
+  document.getElementById('ing-qty').value='';
+  document.getElementById('ing-stock').value=80;
+  document.getElementById('ing-cal').value='';
+  document.getElementById('ing-date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('ing-note').value='';
+  openModal('modal-add-ing');
+}
+function editIngredient(idx){
+  APP.editIngIndex = idx;
+  const ing = APP.ingredients[idx];
+  document.getElementById('modal-ing-title').textContent = `✏️ 编辑：${ing.name}`;
+  document.getElementById('ing-name').value=ing.name;
+  document.getElementById('ing-cat').value=ing.cat;
+  document.getElementById('ing-qty').value=ing.qty||'';
+  document.getElementById('ing-stock').value=ing.stock||80;
+  document.getElementById('ing-cal').value=ing.cal||'';
+  document.getElementById('ing-date').value=ing.date||'';
+  document.getElementById('ing-note').value=ing.note||'';
+  openModal('modal-add-ing');
+}
+function saveIngredient(){
+  const name = document.getElementById('ing-name').value.trim();
+  if(!name){ showToast('请输入食材名称','error'); return; }
+  const ing = {
+    id: APP.editIngIndex>=0? APP.ingredients[APP.editIngIndex].id : Date.now(),
+    name, cat:document.getElementById('ing-cat').value,
+    qty:document.getElementById('ing-qty').value,
+    stock:parseInt(document.getElementById('ing-stock').value)||80,
+    cal:parseInt(document.getElementById('ing-cal').value)||0,
+    date:document.getElementById('ing-date').value,
+    note:document.getElementById('ing-note').value
+  };
+  if(APP.editIngIndex>=0){ APP.ingredients[APP.editIngIndex]=ing; showToast(`✅ "${name}" 已更新`,'success'); }
+  else { APP.ingredients.push(ing); showToast(`✅ "${name}" 已添加`,'success'); }
+  closeModal('modal-add-ing');
+  renderIngredients();
+  generateSuggestions();
+  saveData();
+}
+function deleteIngredient(idx){
+  const name = APP.ingredients[idx].name;
+  if(confirm(`确定删除 "${name}"？`)){
+    APP.ingredients.splice(idx,1);
+    renderIngredients();
+    generateSuggestions();
+    saveData();
+    showToast(`🗑️ "${name}" 已删除`,'info');
+  }
+}
+
+// ===================== MENU GENERATION =====================
+function generateMenu(){
+  const sel = APP.utensils;
+  const ingNames = APP.ingredients.map(i=>i.name.toLowerCase());
+  // Filter recipes by utensils and ingredients
+  function canMake(r){
+    const uOk = r.utensils.every(u=>sel.includes(u))||r.utensils.length===0;
+    // at least 1 main ingredient available (loose match)
+    const iOk = r.ingredients.length===0 || r.ingredients.slice(0,2).some(ri=>
+      ingNames.some(n=>n.includes(ri)||ri.includes(n))
+    );
+    return uOk && iOk;
+  }
+  const meals = ['breakfast','lunch','dinner','snack'];
+  const menu = {};
+  let totalCal=0,totalProtein=0,totalCarb=0,totalFat=0;
+  meals.forEach(meal=>{
+    const pool = RECIPE_DB.filter(r=>r.meal===meal&&canMake(r));
+    const pick = [];
+    // pick 1-3 per meal
+    const count = meal==='snack'?1:meal==='breakfast'?2:3;
+    const shuffled = [...pool].sort(()=>Math.random()-.5);
+    shuffled.slice(0,count).forEach(r=>{ pick.push(r); totalCal+=r.cal; totalProtein+=r.protein; totalCarb+=r.carb; totalFat+=r.fat; });
+    menu[meal] = pick;
+  });
+  APP.currentMenu = menu;
+  renderRecipes(APP.currentMeal);
+  // update calorie bar
+  const pct = Math.min(100,Math.round(totalCal/1800*100));
+  document.getElementById('cal-total').textContent = totalCal;
+  document.getElementById('cal-protein').textContent = totalProtein+'g';
+  document.getElementById('cal-carb').textContent = totalCarb+'g';
+  document.getElementById('cal-fat').textContent = totalFat+'g';
+  document.getElementById('cal-pct').textContent = pct+'%';
+  document.getElementById('cal-bar-fill').style.width = pct+'%';
+  updateStats();
+  showToast('🍽️ 菜单已生成！','success');
+}
+function showMeal(meal,el){
+  APP.currentMeal = meal;
+  document.querySelectorAll('.meal-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderRecipes(meal);
+}
+function renderRecipes(meal){
+  const grid = document.getElementById('recipe-grid');
+  const list = (APP.currentMenu[meal])||[];
+  if(!list.length){
+    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><div class="es-icon">🍽️</div><p>暂无${meal==='breakfast'?'早餐':meal==='lunch'?'午餐':meal==='dinner'?'晚餐':'加餐'}推荐，<button class="btn btn-outline btn-sm" onclick="generateMenu()" style="margin-left:8px">点击生成菜单</button></p></div>`;
+    return;
+  }
+  const diffMap=['','⭐ 简单','⭐⭐ 中等','⭐⭐⭐ 较难'];
+  const diffColor=['','#5cb85c','#f0ad4e','#e74c3c'];
+  grid.innerHTML = list.map(r=>`
+    <div class="recipe-card" onclick="showRecipeDetail('${r.id}')">
+      <div class="recipe-card-img">
+        <span>${r.emoji}</span>
+        <span class="cal-badge">🔥 ${r.cal} kcal</span>
+        <span class="diff-badge" style="background:${diffColor[r.diff]}22;color:${diffColor[r.diff]}">${diffMap[r.diff]}</span>
+      </div>
+      <div class="recipe-card-body">
+        <h3>${r.name}</h3>
+        <div class="ingredients-list">🥘 ${r.ingredients.join(' · ')}</div>
+        <div class="nutrition-row">
+          <div class="nutrition-item"><div class="val">${r.protein}g</div><div class="lab">蛋白质</div></div>
+          <div class="nutrition-item"><div class="val">${r.carb}g</div><div class="lab">碳水</div></div>
+          <div class="nutrition-item"><div class="val">${r.fat}g</div><div class="lab">脂肪</div></div>
+        </div>
+        <div class="time-info" style="margin-top:8px">⏱️ ${r.time}分钟 &nbsp; 🍳 ${r.method}</div>
+      </div>
+      <div class="recipe-card-meta">
+        <span class="tag ${r.gi==='低GI'?'tag-green':r.gi==='中GI'?'tag-orange':'tag-red'}">${r.gi}</span>
+        <span style="font-size:.78rem;color:var(--green-dark);font-weight:600">点击查看做法 →</span>
+      </div>
+    </div>
+  `).join('');
+}
+function showRecipeDetail(id){
+  const r = RECIPE_DB.find(x=>x.id===id); if(!r) return;
+  const diffMap=['','⭐ 简单','⭐⭐ 中等','⭐⭐⭐ 较难'];
+  document.getElementById('modal-recipe-content').innerHTML = `
+    <div style="text-align:center;font-size:4rem;margin-bottom:12px">${r.emoji}</div>
+    <h2 style="text-align:center;border:none;font-size:1.3rem;padding:0;margin-bottom:16px">${r.name}</h2>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:16px">
+      <span class="tag ${r.gi==='低GI'?'tag-green':r.gi==='中GI'?'tag-orange':'tag-red'}">${r.gi}</span>
+      <span class="tag tag-blue">🔥 ${r.cal} kcal</span>
+      <span class="tag tag-gray">${diffMap[r.diff]}</span>
+      <span class="tag tag-gray">⏱️ ${r.time}分钟</span>
+      <span class="tag tag-gray">🍳 ${r.method}</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;background:var(--green-pale);border-radius:10px;padding:14px;margin-bottom:16px">
+      <div class="nutrition-item"><div class="val">${r.cal}</div><div class="lab">热量 kcal</div></div>
+      <div class="nutrition-item"><div class="val">${r.protein}g</div><div class="lab">蛋白质</div></div>
+      <div class="nutrition-item"><div class="val">${r.carb}g</div><div class="lab">碳水</div></div>
+      <div class="nutrition-item"><div class="val">${r.fat}g</div><div class="lab">脂肪</div></div>
+    </div>
+    <div style="margin-bottom:14px">
+      <strong style="font-size:.88rem;color:var(--text2)">🥘 所需食材</strong>
+      <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">${r.ingredients.map(i=>`<span class="tag tag-green">${i}</span>`).join('')}</div>
+    </div>
+    <div style="margin-bottom:14px">
+      <strong style="font-size:.88rem;color:var(--text2)">👩‍🍳 制作步骤</strong>
+      <ol style="margin-top:8px;padding-left:20px;line-height:2;font-size:.88rem;color:var(--text)">
+        ${r.steps.map(s=>`<li>${s}</li>`).join('')}
+      </ol>
+    </div>
+    <div style="background:#FEF9E7;border-radius:8px;padding:12px;border-left:4px solid var(--orange)">
+      <strong style="font-size:.82rem;color:#A04000">💡 养生提示：</strong>
+      <span style="font-size:.85rem;color:#784212">${r.tip}</span>
+    </div>
+  `;
+  openModal('modal-recipe');
+}
+function adoptMenu(){
+  if(!APP.currentMenu||!Object.keys(APP.currentMenu).length){ showToast('请先生成菜单','warning'); return; }
+  // Reduce stock of used ingredients
+  let totalCal=0;
+  Object.values(APP.currentMenu).forEach(recipes=>{
+    if(Array.isArray(recipes)) recipes.forEach(r=>{
+      totalCal+=r.cal;
+      r.ingredients.forEach(ri=>{
+        const found = APP.ingredients.find(i=>i.name.toLowerCase().includes(ri)||ri.includes(i.name.toLowerCase()));
+        if(found && found.stock>5) found.stock = Math.max(5, found.stock - Math.floor(Math.random()*15+5));
+      });
+    });
+  });
+  // Add to history
+  const today = new Date().toLocaleDateString('zh-CN',{month:'numeric',day:'numeric'});
+  const existing = APP.menuHistory.find(h=>h.date===today);
+  if(!existing){
+    APP.menuHistory.unshift({date:today, meals:APP.currentMenu, totalCal});
+    if(APP.menuHistory.length>7) APP.menuHistory.pop();
+  }
+  renderIngredients();
+  renderHistory();
+  generateSuggestions();
+  saveData();
+  showToast('✅ 菜单已采用，库存已自动更新','success');
+  document.getElementById('stat-calories').textContent = totalCal;
+}
+
+// ===================== SUGGESTIONS =====================
+function generateSuggestions(){
+  // Low stock
+  const lowList = document.getElementById('low-stock-list');
+  const low = APP.ingredients.filter(i=>i.stock<=30).sort((a,b)=>a.stock-b.stock);
+  if(!low.length){
+    lowList.innerHTML='<div class="empty-state"><div class="es-icon">✅</div><p>库存充足，无需补货</p></div>';
+  } else {
+    lowList.innerHTML = low.map(i=>`
+      <div class="suggestion-item priority-${i.stock<=15?'high':'mid'}">
+        <div class="s-icon">${{蔬菜:'🥦',肉类:'🥩',碳水:'🍚',水果:'🍎',豆类蛋类:'🥚',调味品:'🧂',其他:'📦'}[i.cat]||'📦'}</div>
+        <div class="s-body">
+          <h4>${i.name} <span class="tag ${i.stock<=15?'tag-red':'tag-orange'}">${i.stock}% 剩余</span></h4>
+          <p>建议尽快补购 ${i.qty||'适量'}，当前分类：${i.cat}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+  // Next day suggestions
+  const nextList = document.getElementById('next-day-list');
+  const suggestions = [
+    {icon:'🐟',title:'补充深海鱼类',body:'近期蛋白质来源以鸡肉/蛋为主，建议明天购入三文鱼或鲭鱼，补充Omega-3',priority:'low'},
+    {icon:'🫐',title:'增加莓果类水果',body:'蓝莓、草莓含有花青素，强抗氧化，建议作为明日加餐',priority:'low'},
+    {icon:'🥬',title:'补充深色绿叶菜',body:'菠菜/羽衣甘蓝富含叶酸和维K，建议每日至少一种深色蔬菜',priority:'mid'},
+    {icon:'🫘',title:'添加豆类食材',body:'毛豆/豌豆/黑豆含优质植物蛋白，建议本周加入2次豆类菜肴',priority:'low'},
+  ];
+  nextList.innerHTML = suggestions.map(s=>`
+    <div class="suggestion-item priority-${s.priority}">
+      <div class="s-icon">${s.icon}</div>
+      <div class="s-body"><h4>${s.title}</h4><p>${s.body}</p></div>
+    </div>
+  `).join('');
+}
+
+// ===================== HISTORY =====================
+function generateHistory(){
+  const mealNames={breakfast:'早',lunch:'午',dinner:'晚',snack:'加'};
+  const sampleMeals=[
+    {breakfast:[{name:'燕麦粥',cal:130}],lunch:[{name:'清炒西蓝花',cal:55},{name:'蒸鸡蛋羹',cal:75}],dinner:[{name:'清蒸鱼',cal:105},{name:'炒时蔬',cal:42}],snack:[{name:'苹果',cal:65}]},
+    {breakfast:[{name:'水煮蛋',cal:78},{name:'蒸红薯',cal:99}],lunch:[{name:'番茄炒蛋',cal:110},{name:'炒豆腐',cal:120}],dinner:[{name:'蒸南瓜',cal:22},{name:'蒸蛋羹',cal:115}],snack:[{name:'坚果',cal:185}]},
+    {breakfast:[{name:'燕麦粥',cal:130}],lunch:[{name:'蒜蓉蒸虾',cal:85},{name:'凉拌黄瓜',cal:35}],dinner:[{name:'水煮菜配瘦肉',cal:145}],snack:[{name:'蒸玉米',cal:86}]},
+  ];
+  const today = new Date();
+  APP.menuHistory = [];
+  for(let i=1;i<=3;i++){
+    const d = new Date(today);
+    d.setDate(d.getDate()-i);
+    const dateStr = `${d.getMonth()+1}月${d.getDate()}日`;
+    const sample = sampleMeals[(i-1)%sampleMeals.length];
+    let totalCal = 0;
+    Object.values(sample).forEach(ms=>ms.forEach(m=>totalCal+=m.cal));
+    APP.menuHistory.push({date:dateStr,meals:sample,totalCal});
+  }
+}
+function renderHistory(){
+  const grid = document.getElementById('history-grid');
+  if(!APP.menuHistory.length){
+    grid.innerHTML='<div class="empty-state"><div class="es-icon">📅</div><p>暂无饮食记录</p></div>';
+    return;
+  }
+  const mealIcon={breakfast:'🌅',lunch:'☀️',dinner:'🌙',snack:'🍎'};
+  const mealName={breakfast:'早餐',lunch:'午餐',dinner:'晚餐',snack:'加餐'};
+  grid.innerHTML = APP.menuHistory.map(h=>`
+    <div class="history-day">
+      <div class="date">📅 ${h.date}</div>
+      <div class="meals">
+        ${Object.entries(h.meals).map(([meal,recipes])=>{
+          if(!Array.isArray(recipes)||!recipes.length) return '';
+          return `<div class="meal-item">${mealIcon[meal]||'🍽️'} <span>${recipes.map(r=>r.name).join('、')}</span></div>`;
+        }).join('')}
+      </div>
+      <div class="total-cal">🔥 ${h.totalCal} kcal</div>
+    </div>
+  `).join('');
+  document.getElementById('stat-days').textContent = APP.menuHistory.length;
+}
+
+// ===================== HEALTH TIPS =====================
+function renderTips(cat){
+  const filter = cat || APP.currentTipCat;
+  const grid = document.getElementById('tips-grid');
+  const list = filter==='all'? TIPS_DATA : TIPS_DATA.filter(t=>t.cat===filter);
+  grid.innerHTML = list.map(t=>`
+    <div class="tip-card ${t.color}">
+      <div class="tip-icon">${t.icon}</div>
+      <h3>${t.title}</h3>
+      <p>${t.body}</p>
+      <div class="tip-source">📖 ${t.source}</div>
+    </div>
+  `).join('');
+}
+function filterTips(cat,el){
+  APP.currentTipCat = cat;
+  document.querySelectorAll('#health-tips .category-tabs .cat-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderTips(cat);
+}
+function refreshTips(){
+  const btn = event.target;
+  btn.textContent = '🔄 更新中…';
+  btn.disabled = true;
+  setTimeout(()=>{
+    renderTips();
+    btn.textContent = '🔄 更新知识';
+    btn.disabled = false;
+    showToast('✅ 健康知识已更新至最新版本','success');
+  }, 1200);
+}
+
+// ===================== MODAL =====================
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+// click overlay to close
+document.querySelectorAll('.modal-overlay').forEach(o=>{
+  o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('open'); });
+});
+
+// ===================== TOAST =====================
+function showToast(msg, type='info', duration=3000){
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.textContent = msg;
+  container.appendChild(toast);
+  setTimeout(()=>{
+    toast.style.opacity='0'; toast.style.transform='translateX(120%)';
+    toast.style.transition='all .3s';
+    setTimeout(()=>toast.remove(), 400);
+  }, duration);
+}
+
+// ===================== PERSIST =====================
+function saveData(){
+  localStorage.setItem('hkk_data', JSON.stringify({
+    utensils:APP.utensils,
+    ingredients:APP.ingredients,
+    menuHistory:APP.menuHistory,
+    currentMenu:APP.currentMenu
+  }));
+}
+
+// ===================== START =====================
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
